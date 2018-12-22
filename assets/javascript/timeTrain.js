@@ -46,9 +46,15 @@ database.ref().on("child_added", function(childSnapshot){
     var nextArrival = moment(TrainTime, "HH:mm:ss").add(frequency, "minutes").format("HH:mm");
     var minutesAway = moment(nextArrival, "HH:mm:ss").diff(time, "minutes");
  
- $("tbody").append("<th><td>" + trainName + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + TrainTime + "</td><td>"+ nextArrival + "</td><td>" + minutesAway + "</td></th>");
-  }, function(errorObject) {
- console.log("Errors handled: " + errorObject.code)
+    var dataArray = [trainName, destination, frequency, nextArrival, minutesAway];
+    var newTr = $("<tr>")
+    for (var i = 0; i < dataArray.length; i++) {
+      var newTd = $("<td>");
+      newTd.text(dataArray[i]);
+      newTd.appendTo(newTr)
+    }
+    $("tbody").append(newTr); 
+   
   
 
 
